@@ -6,6 +6,10 @@ header('Content-Type: text/html; charset=UTF-8');
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
+// メール送信のデバッグ情報をログに記録
+error_log('contact.php 実行開始 - 時刻: ' . date('Y-m-d H:i:s'));
+error_log('POST データ: ' . print_r($_POST, true));
+
 // セッション開始
 session_start();
 
@@ -102,6 +106,7 @@ $headers = array();
 $headers[] = 'MIME-Version: 1.0';
 $headers[] = 'Content-Type: text/plain; charset=UTF-8';
 $headers[] = 'From: 軽の森 <noreply@keinomori.com>';
+$headers[] = 'Reply-To: ' . $email;
 $headers[] = 'Cc: ' . $cc;
 
 // メール本文作成
@@ -122,6 +127,16 @@ $message .= "送信日時: " . date('Y-m-d H:i:s') . "\n";
 // メール送信
 $mail_sent = mail($to, $subject, $message, implode("\r\n", $headers));
 
+// メール送信の確認とログ記録
+if (!$mail_sent) {
+  $error = error_get_last();
+  $error_message = isset($error['message']) ? $error['message'] : '不明なエラー';
+  error_log('管理者向けメール送信失敗 - 送信先: ' . $to . ', エラー: ' . $error_message);
+  die('メール送信に失敗しました。しばらく時間をおいて再度お試しください。');
+} else {
+  error_log('管理者向けメール送信成功 - 送信先: ' . $to . ', 件名: ' . $subject);
+}
+
 // 自動返信メール
 $auto_reply_subject = '【軽の森】お問い合わせありがとうございます';
 $auto_reply_body = $name . " 様\n\n";
@@ -139,10 +154,19 @@ $auto_reply_body .= "TEL: 072-240-0809\n\n";
 $auto_reply_body .= "※このメールは自動送信されています。\n";
 $auto_reply_body .= "※返信はできませんので、ご了承ください。\n";
 
-$auto_reply_headers = "From: " . $to . "\r\n";
+$auto_reply_headers = "From: 軽の森 <noreply@keinomori.com>\r\n";
 $auto_reply_headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
 
 $auto_reply_sent = mail($email, $auto_reply_subject, $auto_reply_body, $auto_reply_headers);
+
+// 自動返信メールの確認とログ記録
+if (!$auto_reply_sent) {
+  $error = error_get_last();
+  $error_message = isset($error['message']) ? $error['message'] : '不明なエラー';
+  error_log('自動返信メール送信失敗 - 送信先: ' . $email . ', エラー: ' . $error_message);
+} else {
+  error_log('自動返信メール送信成功 - 送信先: ' . $email . ', 件名: ' . $auto_reply_subject);
+}
 
 // 送信完了後、フォームに戻る（成功メッセージ付き）
 $_SESSION['success_message'] = 'お問い合わせを受け付けました。担当者より順次ご連絡いたしますので、しばらくお待ちください。';
