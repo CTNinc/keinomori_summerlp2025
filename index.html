@@ -15,7 +15,7 @@
     <header class="stack header-stack">
       <div class="header-img-wrap">
         <img src="img/logo.png" alt="軽の森" class="header-img">
-        <img src="img/storeinfo.png" alt="店舗情報" class="header-img">
+        <img src="img/storeinfo.png" alt="店舗情報" class="header-img header-img2 ">
       </div>
     </header>
 
@@ -28,8 +28,8 @@
         </section>
 
         <section class="stack">
-          <a href="#" id="sp-btn-1"><img src="img/sp_btn.png" alt="ボタン" class="cta-img"></a>
-          <a href="#tel-modal" id="tel-btn-1"><img src="img/tel_btn.png" alt="ボタン" class="cta-img"></a>
+          <a href="#" id="sp-btn-1" class="stack"><img src="img/sp_btn.png" alt="ボタン" class="cta-img"></a>
+          <a href="#tel-modal" id="tel-btn-1"class="stack"><img src="img/tel_btn.png" alt="ボタン" class="cta-img"></a>
         </section>
 
         <!-- CTA -->
@@ -47,6 +47,12 @@
         <div id="tel-modal" class="tel-modal">
             <div class="tel-modal-content">
                 <span class="tel-modal-close"><span class="close-icon">&times;</span><span class="close-text">閉じる</span></span>
+                
+                <!-- モーダルタイトル -->
+                <div class="tel-modal-title">
+                    <h3>軽未使用車のご購入に関する<br>お問い合わせはこちら！</h3>
+                </div>
+                
                 <div class="tel-buttons">
                     <a href="tel:0800-830-329" class="tel-button">
                         <img src="img/tel2.png" alt="0800-830-329" class="tel-img">
@@ -54,6 +60,22 @@
                     <a href="tel:0800-830-3359" class="tel-button">
                         <img src="img/tel1.png" alt="0800-830-3359" class="tel-img">
                     </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 成功メッセージモーダル -->
+        <div id="success-modal" class="success-modal">
+            <div class="success-modal-content">
+                <div class="success-modal-header">
+                    <h3>送信完了</h3>
+                    <span class="success-modal-close">&times;</span>
+                </div>
+                <div class="success-modal-body">
+                    <p id="success-modal-message"></p>
+                </div>
+                <div class="success-modal-footer">
+                    <button class="success-modal-ok-btn">OK</button>
                 </div>
             </div>
         </div>
@@ -100,7 +122,7 @@
                         <div class="contactitem_body">
                             <div class="l_radiobtn">
                               <div class="radiobtn">
-                                  <input type="radio" name="car_type" class="js_radio" data-type="car_type" id="delica_mini" value="デリカミニ" required>
+                                  <input type="radio" name="car_type" class="js_radio" data-type="car_type" id="delica_mini" value="デリカミニ" checked="" required>
                                   <label for="delica_mini">デリカミニ</label>
                               </div>
                                 <div class="radiobtn">
@@ -170,11 +192,11 @@
                         <div class="contactitem_body">
                             <div class="l_radiobtn">
                                 <div class="radiobtn">
-                                    <input type="radio" name="satellite" class="js_radio" data-type="satellite" id="nakamozu" value="なかもず店" checked="" required>
+                                    <input type="radio" name="store" class="js_radio" data-type="store" id="nakamozu" value="なかもず店" checked="" required>
                                     <label for="nakamozu">なかもず店</label>
                                 </div>
                                 <div class="radiobtn">
-                                    <input type="radio" name="satellite" class="js_radio" data-type="satellite" id="izumiootu" value="泉大津店" required>
+                                    <input type="radio" name="store" class="js_radio" data-type="store" id="izumiootu" value="泉大津店" required>
                                     <label for="izumiootu">泉大津店</label>
                                 </div>
                             </div>

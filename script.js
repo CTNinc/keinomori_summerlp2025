@@ -11,6 +11,21 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // エラーメッセージと成功メッセージの表示
     displayMessages();
+    
+    // CTAボタンのイベント設定
+    setupCTAButtons();
+    
+    // モーダルの設定
+    setupModal();
+    
+    // 成功メッセージモーダルの設定
+    setupSuccessModal();
+    
+    // スクロールイベントリスナーを追加
+    window.addEventListener('scroll', updateCTAPosition);
+    
+    // 初期位置を設定
+    updateCTAPosition();
 });
 
 // CSRFトークンの生成
@@ -29,12 +44,13 @@ function generateCSRFToken() {
 
 // フォームバリデーションの設定
 function setupFormValidation() {
-    const form = document.querySelector('.contact-form');
+    const form = document.querySelector('#js_contact');
     if (!form) return;
     
     form.addEventListener('submit', function(e) {
+        e.preventDefault(); // デフォルトの送信を防ぐ
+        
         if (!validateForm()) {
-            e.preventDefault();
             return false;
         }
         
@@ -44,24 +60,94 @@ function setupFormValidation() {
             submitBtn.disabled = true;
             submitBtn.textContent = '送信中...';
         }
+        
+        // フォームデータをAjaxで送信
+        submitFormAjax(form);
+    });
+}
+
+// Ajaxでフォームを送信
+function submitFormAjax(form) {
+    const formData = new FormData(form);
+    
+    fetch('contact.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        // 送信ボタンを元に戻す
+        const submitBtn = form.querySelector('.submit-btn');
+        if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.textContent = '送信する';
+        }
+        
+        if (data.success) {
+            // 成功メッセージをモーダルで表示
+            showSuccessModal(data.message);
+            
+            // フォームをリセット
+            form.reset();
+            
+            // CSRFトークンを再生成
+            generateCSRFToken();
+        } else {
+            // エラーメッセージを表示
+            alert(data.message || '送信に失敗しました。');
+        }
+    })
+    .catch(error => {
+        console.error('送信エラー:', error);
+        
+        // 送信ボタンを元に戻す
+        const submitBtn = form.querySelector('.submit-btn');
+        if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.textContent = '送信する';
+        }
+        
+        // エラーメッセージを表示
+        alert('送信に失敗しました。しばらく時間をおいて再度お試しください。');
     });
 }
 
 // フォームのバリデーション
 function validateForm() {
+    const form = document.querySelector('#js_contact');
+    if (!form) return false;
+    
     let isValid = true;
     const errors = [];
     
     // 必須項目のチェック
     const requiredFields = form.querySelectorAll('[required]');
+    
+    // ラジオボタンとチェックボックスの重複チェックを避けるため、処理済みのnameを記録
+    const processedNames = new Set();
+    
     requiredFields.forEach(field => {
         if (field.type === 'radio' || field.type === 'checkbox') {
             const name = field.name;
+            
+            // 既に処理済みの場合はスキップ
+            if (processedNames.has(name)) {
+                return;
+            }
+            
             const checked = form.querySelector(`input[name="${name}"]:checked`);
             if (!checked) {
                 errors.push(`${getFieldLabel(field)}を選択してください。`);
                 isValid = false;
             }
+            
+            // 処理済みとして記録
+            processedNames.add(name);
         } else if (field.type === 'select-one') {
             if (!field.value) {
                 errors.push(`${getFieldLabel(field)}を選択してください。`);
@@ -74,6 +160,19 @@ function validateForm() {
             }
         }
     });
+    
+    // 日付の妥当性チェック（過去の日付を防ぐ）
+    const dateField = form.querySelector('input[name="visit_date"]');
+    if (dateField && dateField.value) {
+        const selectedDate = new Date(dateField.value);
+        const today = new Date();
+        today.setHours(0, 0, 0, 0); // 時刻を00:00:00に設定
+        
+        if (selectedDate < today) {
+            errors.push('来店希望日は今日以降の日付を選択してください。');
+            isValid = false;
+        }
+    }
     
     // メールアドレスの形式チェック
     const emailField = form.querySelector('input[name="email"]');
@@ -93,6 +192,13 @@ function validateForm() {
             errors.push('電話番号は数字のみで入力してください（ハイフンなし）。');
             isValid = false;
         }
+    }
+    
+    // お問い合わせ希望車種の明示的チェック
+    const carTypeChecked = form.querySelector('input[name="car_type"]:checked');
+    if (!carTypeChecked) {
+        errors.push('お問い合わせ希望車種を選択してください。');
+        isValid = false;
     }
     
     // エラーがある場合はアラート表示
@@ -125,6 +231,19 @@ function setupDateField() {
         
         // 最小値を今日に設定（過去の日付を選択できないように）
         dateField.min = todayString;
+        
+        // iPhone対応: 過去の日付が選択された場合の処理
+        dateField.addEventListener('change', function() {
+            const selectedDate = new Date(this.value);
+            const today = new Date();
+            today.setHours(0, 0, 0, 0); // 時刻を00:00:00に設定
+            
+            if (selectedDate < today) {
+                alert('過去の日付は選択できません。今日以降の日付を選択してください。');
+                this.value = ''; // 値をクリア
+                return;
+            }
+        });
         
         // 初期値は設定しない（「年/月/日」を表示するため）
     }
@@ -267,13 +386,28 @@ function setupCTAButtons() {
     // 1つ目のCTAセクション（sp_btn.png）
     const spBtn1 = document.getElementById('sp-btn-1');
     if (spBtn1) {
-        spBtn1.addEventListener('click', function() {
-            // セール情報1のセクション（sale1.pngを含む）にスクロール
-            const sale1Img = document.querySelector('img[src*="sale1.png"]');
-            if (sale1Img) {
-                const sale1Section = sale1Img.closest('section');
-                if (sale1Section) {
-                    sale1Section.scrollIntoView({ behavior: 'smooth' });
+        spBtn1.addEventListener('click', function(e) {
+            e.preventDefault(); // デフォルトの動作を防ぐ
+            
+            // セール情報1のセクション（sale-section）にスクロール
+            const saleSection = document.getElementById('sale-section');
+            if (saleSection) {
+                console.log('sale-section found, scrolling to it');
+                saleSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            } else {
+                console.log('sale-section not found, trying fallback');
+                // フォールバック: sale1.pngを含むセクションを検索
+                const sale1Img = document.querySelector('img[src*="sale1.png"]');
+                if (sale1Img) {
+                    const sale1Section = sale1Img.closest('section');
+                    if (sale1Section) {
+                        console.log('sale1.png section found, scrolling to it');
+                        sale1Section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    } else {
+                        console.log('sale1.png section not found');
+                    }
+                } else {
+                    console.log('sale1.png image not found');
                 }
             }
         });
@@ -295,13 +429,10 @@ function setupCTAButtons() {
     const spBtn2 = document.getElementById('sp-btn-2');
     if (spBtn2) {
         spBtn2.addEventListener('click', function() {
-            // セール情報1のセクション（sale1.pngを含む）にスクロール
-            const sale1Img = document.querySelector('img[src*="sale1.png"]');
-            if (sale1Img) {
-                const sale1Section = sale1Img.closest('section');
-                if (sale1Section) {
-                    sale1Section.scrollIntoView({ behavior: 'smooth' });
-                }
+            // inquiry.pngのセクションにスクロール
+            const inquiryImg = document.querySelector('img[alt="inquiry.png"], img.inquiry-img');
+            if (inquiryImg) {
+                inquiryImg.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
         });
     }
@@ -321,13 +452,28 @@ function setupCTAButtons() {
     // 3つ目のCTAセクション（sp_btn.png）
     const spBtn3 = document.getElementById('sp-btn-3');
     if (spBtn3) {
-        spBtn3.addEventListener('click', function() {
-            // セール情報1のセクション（sale1.pngを含む）にスクロール
-            const sale1Img = document.querySelector('img[src*="sale1.png"]');
-            if (sale1Img) {
-                const sale1Section = sale1Img.closest('section');
-                if (sale1Section) {
-                    sale1Section.scrollIntoView({ behavior: 'smooth' });
+        spBtn3.addEventListener('click', function(e) {
+            e.preventDefault(); // デフォルトの動作を防ぐ
+            
+            // セール情報1のセクション（sale-section）にスクロール
+            const saleSection = document.getElementById('sale-section');
+            if (saleSection) {
+                console.log('sale-section found, scrolling to it');
+                saleSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            } else {
+                console.log('sale-section not found, trying fallback');
+                // フォールバック: sale1.pngを含むセクションを検索
+                const sale1Img = document.querySelector('img[src*="sale1.png"]');
+                if (sale1Img) {
+                    const sale1Section = sale1Img.closest('section');
+                    if (sale1Section) {
+                        console.log('sale1.png section found, scrolling to it');
+                        sale1Section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    } else {
+                        console.log('sale1.png section not found');
+                    }
+                } else {
+                    console.log('sale1.png image not found');
                 }
             }
         });
@@ -406,16 +552,43 @@ function setupModal() {
         }
     }
 
-// 初期化
-document.addEventListener('DOMContentLoaded', function() {
-    setupDateField();
-    displayMessages();
-    setupCTAButtons();
-    setupModal();
+// 成功メッセージモーダルの表示
+function showSuccessModal(message) {
+    const modal = document.getElementById('success-modal');
+    const messageElement = document.getElementById('success-modal-message');
     
-    // スクロールイベントリスナーを追加
-    window.addEventListener('scroll', updateCTAPosition);
+    if (modal && messageElement) {
+        messageElement.textContent = message;
+        modal.style.display = 'block';
+    }
+}
+
+// 成功メッセージモーダルの設定
+function setupSuccessModal() {
+    const modal = document.getElementById('success-modal');
+    const closeBtn = modal.querySelector('.success-modal-close');
+    const okBtn = modal.querySelector('.success-modal-ok-btn');
     
-    // 初期位置を設定
-    updateCTAPosition();
-});
+    // 閉じるボタンのイベント
+    if (closeBtn) {
+        closeBtn.addEventListener('click', function() {
+            modal.style.display = 'none';
+        });
+    }
+    
+    // OKボタンのイベント
+    if (okBtn) {
+        okBtn.addEventListener('click', function() {
+            modal.style.display = 'none';
+        });
+    }
+    
+    // モーダル外をクリックしても閉じる
+    modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+            modal.style.display = 'none';
+        }
+    });
+}
+
+

@@ -1,10 +1,10 @@
 <?php
 // 文字エンコーディング設定
-header('Content-Type: text/html; charset=UTF-8');
+header('Content-Type: application/json; charset=UTF-8');
 
 // エラーレポート設定
 error_reporting(E_ALL);
-ini_set('display_errors', 1);
+ini_set('display_errors', 0); // エラーを表示しない
 
 // メール送信のデバッグ情報をログに記録
 error_log('contact.php 実行開始 - 時刻: ' . date('Y-m-d H:i:s'));
@@ -15,14 +15,21 @@ session_start();
 
 // フォームがPOSTで送信されたかチェック
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-  header('Location: index.html');
+  echo json_encode([
+    'success' => false,
+    'message' => '不正なリクエストです。'
+  ]);
   exit;
 }
 
 // CSRF対策（セッションストレージから取得）
 $csrf_token = isset($_POST['csrf_token']) ? $_POST['csrf_token'] : '';
 if (empty($csrf_token)) {
-  die('CSRFトークンが設定されていません。');
+  echo json_encode([
+    'success' => false,
+    'message' => 'CSRFトークンが設定されていません。'
+  ]);
+  exit;
 }
 
 // 入力値の取得とサニタイズ
@@ -81,35 +88,29 @@ if (!$privacy_agree) {
   $errors['privacy_agree'] = 'プライバシーポリシーに同意してください。';
 }
 
-// エラーがある場合はフォームに戻る
+// エラーがある場合はJSONでエラーを返す
 if (!empty($errors)) {
-  // エラー情報をセッションに保存
-  $_SESSION['form_errors'] = $errors;
-  $_SESSION['form_data'] = $_POST;
-
-  // JavaScriptでセッションストレージに保存するためのスクリプト
-  echo '<script>
-    sessionStorage.setItem("form_errors", \'' . json_encode($errors) . '\');
-    sessionStorage.setItem("form_data", \'' . json_encode($_POST) . '\');
-    window.location.href = "index.html";
-  </script>';
+  echo json_encode([
+    'success' => false,
+    'message' => '入力内容にエラーがあります。',
+    'errors' => $errors
+  ]);
   exit;
 }
 
 // メール送信処理
-$to = 'keinomori-hp@yosidaauto.com';
-$cc = 'info@ctn-net.co.jp';
+$to = 'daichi202405@gmail.com'; // 会社宛てのメールアドレス
+$cc = 'daichi7558@gmail.com'; // CC
 $subject = '軽の森 お問い合わせフォーム - ' . $car_type;
 
-// ヘッダー設定
-$headers = array();
-$headers[] = 'MIME-Version: 1.0';
-$headers[] = 'Content-Type: text/plain; charset=UTF-8';
+// メールヘッダー設定
+$headers = [];
 $headers[] = 'From: 軽の森 <noreply@keinomori.com>';
 $headers[] = 'Reply-To: ' . $email;
 $headers[] = 'Cc: ' . $cc;
+$headers[] = 'Content-Type: text/plain; charset=UTF-8';
 
-// メール本文作成
+// メール本文作成（会社宛て）
 $message = "以下の内容でお問い合わせがありました。\n\n";
 $message .= "【お客様情報】\n";
 $message .= "お名前: " . $name . "\n";
@@ -124,21 +125,26 @@ $message .= "お問い合わせ内容: " . $message_content . "\n";
 $message .= "プライバシーポリシー同意: " . ($privacy_agree ? '同意' : '未同意') . "\n\n";
 $message .= "送信日時: " . date('Y-m-d H:i:s') . "\n";
 
-// メール送信
+// 会社宛てメール送信
 $mail_sent = mail($to, $subject, $message, implode("\r\n", $headers));
 
 // メール送信の確認とログ記録
 if (!$mail_sent) {
   $error = error_get_last();
   $error_message = isset($error['message']) ? $error['message'] : '不明なエラー';
-  error_log('管理者向けメール送信失敗 - 送信先: ' . $to . ', エラー: ' . $error_message);
-  die('メール送信に失敗しました。しばらく時間をおいて再度お試しください。');
+  error_log('会社宛てメール送信失敗 - 送信先: ' . $to . ', エラー: ' . $error_message);
+
+  echo json_encode([
+    'success' => false,
+    'message' => 'メール送信に失敗しました。しばらく時間をおいて再度お試しください。'
+  ]);
+  exit;
 } else {
-  error_log('管理者向けメール送信成功 - 送信先: ' . $to . ', 件名: ' . $subject);
+  error_log('会社宛てメール送信成功 - 送信先: ' . $to . ', 件名: ' . $subject);
 }
 
-// 自動返信メール
-$auto_reply_subject = '【軽の森】お問い合わせありがとうございます';
+// お客様宛て自動返信メール
+$auto_reply_subject = '【軽の森】お問い合わせありがとうございます - ' . $car_type;
 $auto_reply_body = $name . " 様\n\n";
 $auto_reply_body .= "この度は軽の森にお問い合わせいただき、ありがとうございます。\n\n";
 $auto_reply_body .= "以下の内容でお問い合わせを受け付けました。\n";
@@ -157,23 +163,21 @@ $auto_reply_body .= "※返信はできませんので、ご了承ください�
 $auto_reply_headers = "From: 軽の森 <noreply@keinomori.com>\r\n";
 $auto_reply_headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
 
+// お客様宛てメール送信
 $auto_reply_sent = mail($email, $auto_reply_subject, $auto_reply_body, $auto_reply_headers);
 
 // 自動返信メールの確認とログ記録
 if (!$auto_reply_sent) {
   $error = error_get_last();
   $error_message = isset($error['message']) ? $error['message'] : '不明なエラー';
-  error_log('自動返信メール送信失敗 - 送信先: ' . $email . ', エラー: ' . $error_message);
+  error_log('お客様宛て自動返信メール送信失敗 - 送信先: ' . $email . ', エラー: ' . $error_message);
 } else {
-  error_log('自動返信メール送信成功 - 送信先: ' . $email . ', 件名: ' . $auto_reply_subject);
+  error_log('お客様宛て自動返信メール送信成功 - 送信先: ' . $email . ', 件名: ' . $auto_reply_subject);
 }
 
-// 送信完了後、フォームに戻る（成功メッセージ付き）
-$_SESSION['success_message'] = 'お問い合わせを受け付けました。担当者より順次ご連絡いたしますので、しばらくお待ちください。';
-
-// JavaScriptでセッションストレージに保存するためのスクリプト
-echo '<script>
-  sessionStorage.setItem("success_message", "お問い合わせを受け付けました。担当者より順次ご連絡いたしますので、しばらくお待ちください。");
-  window.location.href = "index.html";
-</script>';
+// 送信完了後、JSONレスポンスを返す
+echo json_encode([
+  'success' => true,
+  'message' => 'お問い合わせを受け付けました。担当者より順次ご連絡いたしますので、しばらくお待ちください。'
+]);
 exit;
