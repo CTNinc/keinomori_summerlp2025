@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>軽の森 - 軽自動車専門店</title>
+    <meta name="robots" content="noindex">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- ヘッダー -->
+    <header class="stack header-stack">
+      <div class="header-img-wrap">
+        <img src="img/logo.png" alt="軽の森" class="header-img">
+        <img src="img/storeinfo.png" alt="店舗情報" class="header-img">
+      </div>
+    </header>
+
+    <!-- メインコンテンツ -->
+    <main>
+        <div class="main_content_block">
+            <!-- ファーストビュー -->
+        <section class="fv-section stack">
+            <img src="img/FV.png" alt="軽の森 ファーストビュー" class="fv-img">
+        </section>
+
+        <section class="stack">
+          <a href="#" id="sp-btn-1"><img src="img/sp_btn.png" alt="ボタン" class="cta-img"></a>
+          <a href="#tel-modal" id="tel-btn-1"><img src="img/tel_btn.png" alt="ボタン" class="cta-img"></a>
+        </section>
+
+        <!-- CTA -->
+        <section class="cta-section">
+          <img src="img/CTA1.png" alt="予約ボタン" class="cta-img" id="sp-btn-2">
+          <img src="img/CTA2.png" alt="電話ボタン" class="cta-img" id="tel-btn-2">
+        </section>
+
+        <!-- オプション情報 -->
+        <section class="option-section stack">
+            <img src="img/option.png" alt="オプション情報" class="option-img">
+        </section>
+
+        <!-- 電話モーダル -->
+        <div id="tel-modal" class="tel-modal">
+            <div class="tel-modal-content">
+                <span class="tel-modal-close"><span class="close-icon">&times;</span><span class="close-text">閉じる</span></span>
+                <div class="tel-buttons">
+                    <a href="tel:0800-830-329" class="tel-button">
+                        <img src="img/tel2.png" alt="0800-830-329" class="tel-img">
+                    </a>
+                    <a href="tel:0800-830-3359" class="tel-button">
+                        <img src="img/tel1.png" alt="0800-830-3359" class="tel-img">
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <section class="stack">
+          <a href="#" id="sp-btn-3"><img src="img/sp_btn.png" alt="ボタン" class="cta-img"></a>
+          <a href="#tel-modal" id="tel-btn-3"><img src="img/tel_btn.png" alt="ボタン" class="cta-img"></a>
+        </section>
+
+        <!-- セール情報1 -->
+        <section id="sale-section" class="sale-section stack">
+            <img src="img/sale1.png" alt="セール情報1" class="sale-img">
+        </section>
+
+        <!-- セール情報2 -->
+        <section class="sale-section stack">
+            <img src="img/sale2.png" alt="セール情報2" class="sale-img">
+        </section>
+
+        <!-- 店舗情報 -->
+        <section class="store-section stack">
+            <img src="img/store.png" alt="店舗情報" class="store-img">
+        </section>
+
+        <!-- アポイントメント -->
+        <section class="appoint-section stack">
+            <img src="img/appoint.png" alt="アポイントメント" class="appoint-img">
+        </section>
+
+        <!-- お問い合わせフォーム -->
+        <section class="inquiry-section stack">
+            <img src="img/inquiry.png" alt="お問い合わせ" class="inquiry-img">
+            
+            <div class="form-container">
+              <!-- 成功メッセージ -->
+                <div id="success-message" class="success-message" style="display: none;"></div>
+                
+                                 <form action="contact.php" method="POST" class="form" id="js_contact" data-gtm-form-interact-id="0">
+                                    <!-- CSRFトークン -->
+                                    <input type="hidden" name="csrf_token" id="csrf_token">
+                    <!-- お問い合わせ希望車種 -->
+                    <div class="form-group">
+                        <label class="required">お問い合わせ希望車種</label>
+                        <div class="contactitem_body">
+                            <div class="l_radiobtn">
+                              <div class="radiobtn">
+                                  <input type="radio" name="car_type" class="js_radio" data-type="car_type" id="delica_mini" value="デリカミニ" required>
+                                  <label for="delica_mini">デリカミニ</label>
+                              </div>
+                                <div class="radiobtn">
+                                    <input type="radio" name="car_type" class="js_radio" data-type="car_type" id="spaceia_custom" value="スペーシアカスタム" required>
+                                    <label for="spaceia_custom">スペーシアカスタム</label>
+                                </div>
+                            </div>
+                            <span class="mark"></span>
+                            <div class="errortxt">選択してください</div>
+                        </div>
+                    </div>
+
+                    <!-- お名前 -->
+                    <div class="form-group">
+                        <label class="required">お名前</label>
+                        <input type="text" name="name" placeholder="吉田　太郎" required>
+                        <div class="error-message" id="name_error"></div>
+                    </div>
+
+                    <!-- お名前（ふりがな） -->
+                    <div class="form-group">
+                        <label class="required">お名前（ふりがな）</label>
+                        <input type="text" name="name_kana" placeholder="よしだ　たろう" required>
+                        <div class="error-message" id="name_kana_error"></div>
+                    </div>
+
+                    <!-- メールアドレス -->
+                    <div class="form-group">
+                        <label class="required">メールアドレス</label>
+                        <input type="email" name="email" placeholder="example@kmori.com" required>
+                        <div class="error-message" id="email_error"></div>
+                    </div>
+
+                    <!-- 電話番号 -->
+                    <div class="form-group">
+                        <label class="required">電話番号（ハイフンなし）</label>
+                        <input type="tel" name="phone" placeholder="携帯可" pattern="[0-9]+" required>
+                        <div class="error-message" id="phone_error"></div>
+                    </div>
+
+                    <!-- 来店希望日時 -->
+                    <div class="form-group">
+                        <label class="required">来店希望日時</label>
+                        <div class="datetime-group">
+                            <input type="date" name="visit_date" required>
+                            <select name="visit_time" required>
+                                <option value="">選択してください</option>
+                                <option value="9:00">9:00</option>
+                                <option value="10:00">10:00</option>
+                                <option value="11:00">11:00</option>
+                                <option value="12:00">12:00</option>
+                                <option value="13:00">13:00</option>
+                                <option value="14:00">14:00</option>
+                                <option value="15:00">15:00</option>
+                                <option value="16:00">16:00</option>
+                                <option value="17:00">17:00</option>
+                                <option value="18:00">18:00</option>
+                            </select>
+                        </div>
+                        <div class="error-message" id="visit_date_error"></div>
+                        <div class="error-message" id="visit_time_error"></div>
+                    </div>
+
+                    <!-- 来店希望店舗 -->
+                    <div class="form-group">
+                        <label class="required">来店希望店舗</label>
+                        <div class="contactitem_body">
+                            <div class="l_radiobtn">
+                                <div class="radiobtn">
+                                    <input type="radio" name="satellite" class="js_radio" data-type="satellite" id="nakamozu" value="なかもず店" checked="" required>
+                                    <label for="nakamozu">なかもず店</label>
+                                </div>
+                                <div class="radiobtn">
+                                    <input type="radio" name="satellite" class="js_radio" data-type="satellite" id="izumiootu" value="泉大津店" required>
+                                    <label for="izumiootu">泉大津店</label>
+                                </div>
+                            </div>
+                            <span class="mark"></span>
+                            <div class="errortxt">選択してください</div>
+                        </div>
+                    </div>
+
+                    <!-- お問い合わせ内容 -->
+                    <div class="form-group">
+                        <label>お問い合わせ内容</label>
+                        <textarea name="message" rows="5" placeholder="お問い合わせ内容をご記入ください"></textarea>
+                    </div>
+
+                    <!-- プライバシーポリシー同意 -->
+                    <div class="form-group">
+                        <div class="customer_foot_privacy">
+                            <div class="l_privacypolicy">
+                                <div class="privacypolicy js_sender_wrap">
+                                    <div class="privacypolicy_checkbox">
+                                        <input class="js_sender js_sender_check" type="checkbox" name="privacy_agree" id="check" value="1" required>
+                                        <label class="privacypolicy_checkbox_label" for="check">
+                                            <div class="privacypolicy_checkbox_label_error">チェックを入れてください</div>
+                                        </label>
+                                    </div>
+                                    <div class="privacypolicy_textbox">
+                                        <span class="privacypolicy_textbox_required">必須</span>
+                                        <div class="privacypolicy_textbox_text">
+                                            <a href="https://keinomori.com/privacy/" target="_blank" rel="noopener" class="u_linktext">
+                                                <span>プライバシーポリシー</span>
+                                            </a>
+                                            <span>に<br>同意する</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 送信ボタン -->
+                    <div class="form-group">
+                        <button type="submit" class="submit-btn">
+                            送信する
+                        </button>
+                    </div>
+
+                    <!-- 注意事項 -->
+                    <div class="notice-block">
+                        <p>転売目的および同業者への販売は固くお断りさせていただきます</p>
+                    </div>
+                </form>
+            </div>
+        </section>
+        </div>
+    </main>
+
+    <!-- フッター -->
+    <footer class="stack footer-stack">
+      <div class="footer-img-wrap">
+        <img src="img/footer.png" alt="軽の森 フッター" class="footer-img">
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
