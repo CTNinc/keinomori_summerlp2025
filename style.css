@@ -37,14 +37,40 @@ header {
     width: 100%;
     background-color: #fff;
     box-sizing: border-box;
-    box-shadow: -4px 0 8px rgba(203, 198, 195, 0.9), 4px 0 8px rgba(203, 198, 195, 0.9);
+}
 
+/* 中サイズ端末（395px〜768px）でのヘッダー幅調整 */
+@media (min-width: 395px) and (max-width: 768px) {
+    .header-img-wrap {
+        max-width: 375px;
+        padding: 0 10px;
+    }
+    .header-img {
+        height: auto;
+        display: block;
+        width: 80px;
+        object-fit: cover;
+    }
+}
+
+/* PC版でのヘッダー幅調整 */
+@media (min-width: 769px) {
+    .header-img-wrap {
+        max-width: 768px;
+        padding: 0 20px;
+    }
+    .header-img {
+        height: auto;
+        display: block;
+        width: 30% !important;
+        object-fit: cover;
+    }
 }
 
 .header-img {
     height: auto;
     display: block;
-    width: 80px !important;
+    width: 80px;
     object-fit: cover;
 }
 .header-img2 {
@@ -62,26 +88,50 @@ header {
     
 } */
 
+@media (max-width: 394px) {
+   
+    
+    footer {
+        max-width: 100%;
+        margin-bottom: 0px!important; /* フッターの下余白を追加 */
+        padding-bottom: 0px!important; /* フッターの内側下余白も追加 */
+    }
+    
+
+}
+
 /* フッター */
 footer {
-    display: flex;
-    justify-content: center;
+    display: block;
     line-height: 0;
-   
-    margin-top: -12px;
+    margin:0 auto;
     z-index: 1;
-    height: 150px;
-    background-color: #CBC6C3;
     background-color: #faf4ef;
 }
 
 
 .footer-img-wrap {
-    max-width: 390px;
+    max-width: 375px;
+    margin: 0 auto;
 }
 
-.footer-img-wrap img {
-    max-width: 390px;
+/* 中サイズ端末（395px〜768px）でのフッター幅調整 */
+@media (min-width: 395px) and (max-width: 768px) {
+    .footer-img-wrap {
+        max-width: 375px;
+    }
+}
+
+/* PC版でのフッター幅調整 */
+@media (min-width: 769px) {
+    .footer-img-wrap {
+        max-width: 768px;
+    }
+    
+    /* PC版ではフッター画像2を非表示 */
+    .footer-img2 {
+        display: none!important;
+    }
 }
 
 /* メインコンテンツ */
@@ -96,22 +146,62 @@ main {
 }
 
 .main_content_block {
-    max-width: 390px;
+    max-width: 375px;
     margin: 0 auto;
     padding-bottom: 0;
     height: fit-content;
 }
 
+/* 中サイズ端末（395px〜768px）でのメインコンテンツ幅調整 */
+@media (min-width: 395px) and (max-width: 768px) {
+    .main_content_block {
+        max-width: 375px;
+    }
+}
+
+/* PC版でのレイアウト調整 */
+@media (min-width: 769px) {
+    .main_content_block {
+        max-width: 768px;
+    }
+}
+
+/* SP版での左右マージン調整 */
+@media (max-width: 394px) {
+    .main_content_block {
+        margin: 0;
+    }
+    
+    .header-img-wrap {
+        margin: 0;
+    }
+}
+
 /* セクション共通 */
 section {
     width: 100%;
-    margin: 0;
+    margin: 0 auto;
     padding: 0;
     display: block;
     line-height: 0;
     font-size: 0;
     vertical-align: bottom;
     margin-top: -8px;
+    max-width: 375px;
+}
+
+/* 中サイズ端末（395px〜768px）でのセクション幅調整 */
+@media (min-width: 395px) and (max-width: 768px) {
+    section {
+        max-width: 375px;
+    }
+}
+
+/* PC版でのセクション幅調整 */
+@media (min-width: 769px) {
+    section {
+        max-width: 768px;
+    }
 }
 
 /* スタック効果 - 影の広がり量分だけ次の画像を上に重ねる */
@@ -168,12 +258,36 @@ main + footer {
     width: 100%;
     height: auto;
     display: block;
-    max-width: 390px;
-    margin: 0;
+    margin: 0 auto;
     padding: 0;
     vertical-align: bottom;
     font-size: 0;
     cursor: pointer;
+}
+
+/* 中サイズ端末（395px〜768px）での画像幅調整 */
+@media (min-width: 395px) and (max-width: 768px) {
+    .fv-img,
+    .sale-img,
+    .store-img,
+    .option-img,
+    .inquiry-img,
+    .appoint-img,
+    .cta-img {
+        max-width: 375px;
+    }
+}
+
+/* PC版での画像幅調整 */
+@media (min-width: 769px) {
+    .fv-img,
+    .sale-img,
+    .store-img,
+    .option-img,
+    .inquiry-img,
+    .appoint-img {
+        max-width: 768px;
+    }
 }
 
 /* CTAセクション専用スタイル */
@@ -185,17 +299,32 @@ main + footer {
     z-index: 9999;
     width: 100vw;
     height: 60px;
-    max-width: 390px;
+    max-width: 375px;
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     padding: 7px 10px;
     margin: 0 auto;
     background-color: rgba(250, 244, 239, .8);
     border-radius: 15px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
     gap: 15px;
+}
+
+/* 中サイズ端末（395px〜768px）でのCTAセクション幅調整 */
+@media (min-width: 395px) and (max-width: 768px) {
+    .cta-section {
+        max-width: 375px;
+    }
+}
+
+/* PC版でのCTAセクション幅調整 */
+@media (min-width: 769px) {
+    .cta-section {
+        max-width: 768px;
+        gap: 30px;
+    }
 }   
 /* CTAセクション内の画像のみに適用 */
 .cta-section .cta-img {
@@ -330,25 +459,40 @@ main + footer {
     left: 2%;
 }
 
-/* フッター画像専用スタイル */
-.footer-img {
-    display: block;
+/* フッター画像の幅を他の画像と統一 */
+.footer-img-wrap img {
+    max-width: 100%;
     width: 100%;
     height: auto;
-    max-width: 390px;
+    display: block;
 }
 
 /* お問い合わせフォーム */
 .inquiry-section {
     padding: 0;
     width: 100%;
-    max-width: 390px;
+    max-width: 375px;
     line-height: normal;
     font-size: 16px;
+    margin: 0 auto;
+}
+
+/* 中サイズ端末（395px〜768px）でのお問い合わせセクション幅調整 */
+@media (min-width: 395px) and (max-width: 768px) {
+    .inquiry-section {
+        max-width: 375px;
+    }
+}
+
+/* PC版でのお問い合わせセクション幅調整 */
+@media (min-width: 769px) {
+    .inquiry-section {
+        max-width: 768px;
+    }
 }
 
 .form-container {
-    max-width: 390px;
+    max-width: 375px;
     margin: 0 auto;
     padding: 0 8px;
     font-size: 16px;
@@ -356,10 +500,25 @@ main + footer {
     box-sizing: border-box;
 }
 
+/* 中サイズ端末（395px〜768px）でのフォーム幅調整 */
+@media (min-width: 395px) and (max-width: 768px) {
+    .form-container {
+        max-width: 375px;
+        padding: 0;
+    }
+}
+
+/* PC版でのフォーム幅調整 */
+@media (min-width: 769px) {
+    .form-container {
+        max-width: 768px;
+        padding: 0;
+    }
+}
+
 .form {
     background-color: #fff;
     padding: 0 30px;
-    box-shadow: 0 0 14px rgba(0, 0, 0, 0.7);
     padding: 10px;
 }
 
@@ -393,7 +552,7 @@ main + footer {
     content: "";
 }
 
-@media (min-width: 561px) {
+@media (min-width: 769px) {
     .form-group label.required::before {
         font-size: 10px;
     }
@@ -404,7 +563,6 @@ main + footer {
 .form-group input[type="email"],
 .form-group input[type="tel"],
 .form-group input[type="date"],
-.form-group select,
 .form-group textarea {
     width: 100%;
     padding: 5px 8px;
@@ -414,6 +572,19 @@ main + footer {
     font-family: 'Noto Sans JP', sans-serif;
     background-color: #faf4ef;
     transition: border-color 0.3s ease;
+}
+
+/* select要素の基本スタイル（文字色は個別に設定） */
+.form-group select {
+    width: 100%;
+    padding: 5px 8px;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+    font-family: 'Noto Sans JP', sans-serif;
+    background-color: #faf4ef;
+    transition: border-color 0.3s ease;
+    color: #333; /* デフォルトの文字色 */
 }
 
 /* エラーメッセージ */
@@ -589,7 +760,7 @@ main + footer {
     font-weight: 700;
 }
 
-@media (min-width: 561px) {
+@media (min-width: 769px) {
     .errortxt {
         font-size: 14px;
     }
@@ -758,7 +929,7 @@ main + footer {
     opacity: 1;
 }
 
-@media (min-width: 561px) {
+@media (min-width: 769px) {
     .privacypolicy_checkbox_label_error {
         font-size: 14px;
     }
@@ -784,7 +955,7 @@ main + footer {
     flex-shrink: 0;
 }
 
-@media (min-width: 561px) {
+@media (min-width: 769px) {
     .privacypolicy_textbox_required {
         font-size: 10px;
     }
@@ -890,6 +1061,25 @@ main + footer {
     box-sizing: border-box;
 }
 
+/* カレンダーアイコンのスタイル */
+.datetime-group .flatpickr-input,
+.datetime-group .has-calendar-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3crect x='3' y='4' width='18' height='18' rx='2' ry='2'/%3e%3cline x1='16' y1='2' x2='16' y2='6'/%3e%3cline x1='8' y1='2' x2='8' y2='6'/%3e%3cline x1='3' y1='10' x2='21' y2='10'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    background-size: 20px;
+    padding-right: 35px;
+    cursor: pointer;
+}
+
+/* カレンダーアイコンのホバー効果 */
+.datetime-group .flatpickr-input:hover,
+.datetime-group .has-calendar-icon:hover {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%233498db' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3crect x='3' y='4' width='18' height='18' rx='2' ry='2'/%3e%3cline x1='16' y1='2' x2='16' y2='6'/%3e%3cline x1='8' y1='2' x2='8' y2='6'/%3e%3cline x1='3' y1='10' x2='21' y2='10'/%3e%3c/svg%3e");
+}
+
+
+
 /* iPhone Safari専用の日付ピッカーサイズ調整 */
 @supports (-webkit-touch-callout: none) {
     .datetime-group input[type="date"] {
@@ -969,6 +1159,43 @@ main + footer {
     box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
 }
 
+/* 時間選択のプレースホルダー色を統一 */
+.datetime-group select option[value=""][disabled] {
+    color: #999 !important;
+    font-style: italic;
+}
+
+/* 選択肢の色を通常の色に戻す */
+.datetime-group select option:not([disabled]) {
+    color: #333 !important;
+}
+
+/* より確実なプレースホルダー色設定 */
+.datetime-group select option[value=""] {
+    color: #999 !important;
+}
+
+/* select要素自体の文字色をリセット */
+.datetime-group select {
+    color: #333 !important;
+}
+
+/* プレースホルダーが選択されている状態での表示 */
+.datetime-group select option[value=""]:checked {
+    color: #999 !important;
+}
+
+/* 値が選択されている場合の表示 */
+.datetime-group select:not([value=""]) {
+    color: #333 !important;
+}
+
+/* プレースホルダーが選択されている場合のselect要素の文字色 */
+.datetime-group select option[value=""]:checked + select,
+.datetime-group select:has(option[value=""]:checked) {
+    color: #999 !important;
+}
+
 /* 注意事項ブロック */
 .notice-block {
     background: #6c757d;
@@ -1006,7 +1233,7 @@ main + footer {
     position: relative;
 }
 
-@media (min-width: 561px) {
+@media (min-width: 769px) {
     .submit-btn {
         font-size: 16px;
     }
@@ -1189,8 +1416,8 @@ main + footer {
     font-size: 14px;
 }
 
-/* SP専用デザイン（390px幅） */
-@media (max-width: 390px) {
+/* SP専用デザイン（394px幅以下） */
+@media (max-width: 394px) {
     main {
         max-width: 100%;
         margin: 0;
@@ -1221,7 +1448,11 @@ main + footer {
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3)!important;
     }
 
-    .header-img,
+    .header-img {
+        width: 80px;
+        max-width: 80px;
+    }
+    
     .fv-img,
     .sale-img,
     .store-img,
@@ -1234,7 +1465,7 @@ main + footer {
     }
     
     .form-container {
-        padding: 0 8px;
+        padding: 0;
         max-width: 100%;
     }
     
@@ -1251,6 +1482,22 @@ main + footer {
     .submit-btn {
         width: 100%;
         justify-content: center;
+        padding: 8px 0 10px;
+        font-size: 16px;
+    }
+    
+    /* SP版でのCTAセクション調整 */
+    .cta-section {
+        max-width: 365px;
+        left: 50%;
+        transform: translateX(-50%);
+        justify-content: center;
+        gap: 10px;
+    }
+    
+    .cta-section .cta-img {
+        width: 160px;
+        max-width: 160px;
     }
     
     .form-container h2 {
@@ -1279,12 +1526,111 @@ main + footer {
     .form-group input[type="date"],
     .form-group select,
     .form-group textarea {
-        padding: 10px 12px;
+        padding: 5px 8px;
         font-size: 14px;
+        height: 35px;
+        box-sizing: border-box;
+    }
+    
+    .form-group {
+        margin-bottom: 15px;
+    }
+    
+    .form-group label {
+        margin-bottom: 5px;
+        font-size: 14px;
+    }
+    
+    .form-group label.required::before {
+        font-size: 10px;
+        padding: 0 3px 1px;
+    }
+    
+    .form-group textarea {
+        height: 80px;
+        resize: vertical;
     }
     
     .complete-message {
         font-size: 16px;
+    }
+}
+
+/* 中サイズ端末（395px〜768px）での追加調整 */
+@media (min-width: 395px) and (max-width: 768px) {
+    /* ヘッダーとフッターの画像サイズ調整 */
+    .header-img {
+        width: 80px;
+        max-width: 80px;
+    }
+    
+    /* フォーム要素の調整 */
+    .form-group input[type="text"],
+    .form-group input[type="email"],
+    .form-group input[type="tel"],
+    .form-group input[type="date"],
+    .form-group select,
+    .form-group textarea {
+        padding: 6px 10px;
+        font-size: 15px;
+        height: 38px;
+        box-sizing: border-box;
+    }
+    
+    .form-group {
+        margin-bottom: 18px;
+    }
+    
+    .form-group label {
+        margin-bottom: 6px;
+        font-size: 15px;
+    }
+    
+    .form-group label.required::before {
+        font-size: 11px;
+        padding: 0 4px 1px;
+    }
+    
+    .form-group textarea {
+        height: 90px;
+        resize: vertical;
+    }
+    
+    /* 送信ボタンの調整 */
+    .submit-btn {
+        width: 180px;
+        padding: 12px 0 14px;
+        font-size: 16px;
+    }
+    
+    /* CTAセクションの調整 */
+    .cta-section {
+        padding: 8px 12px;
+        gap: 18px;
+    }
+    
+    .cta-section .cta-img {
+        width: 170px;
+        max-width: 170px;
+    }
+    
+    /* 注意事項ブロックの調整 */
+    .notice-block {
+        font-size: 8px;
+        max-width: 320px;
+    }
+    
+    /* プライバシーポリシーの調整 */
+    .privacypolicy_textbox_text {
+        font-size: 12px;
+    }
+    
+    .privacypolicy_textbox_required {
+        font-size: 11px;
+    }
+    
+    .errortxt {
+        font-size: 14px;
     }
 }
 

@@ -9,6 +9,16 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <!-- Flatpickr CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/ja.js"></script>
+    
+    <!-- Flatpickr 最小スタイル -->
+    <style>
+      .c-datepicker.flatpickr-input { cursor: pointer; }
+      .flatpickr-calendar { z-index: 9999; } /* ヘッダやモーダルより前面に */
+    </style>
 </head>
 <body>
     <!-- ヘッダー -->
@@ -167,20 +177,20 @@
                     <div class="form-group">
                         <label class="required">来店希望日時</label>
                         <div class="datetime-group">
-                            <input type="date" name="visit_date" required>
-                            <select name="visit_time" required>
-                                <option value="">選択してください</option>
-                                <option value="9:00">9:00</option>
-                                <option value="10:00">10:00</option>
-                                <option value="11:00">11:00</option>
-                                <option value="12:00">12:00</option>
-                                <option value="13:00">13:00</option>
-                                <option value="14:00">14:00</option>
-                                <option value="15:00">15:00</option>
-                                <option value="16:00">16:00</option>
-                                <option value="17:00">17:00</option>
-                                <option value="18:00">18:00</option>
-                            </select>
+                            <input type="date" name="visit_date" required class="c-datepicker">
+                                                         <select name="visit_time" required>
+                                 <option value="" disabled>選択してください</option>
+                                 <option value="9:00">9:00</option>
+                                 <option value="10:00">10:00</option>
+                                 <option value="11:00">11:00</option>
+                                 <option value="12:00">12:00</option>
+                                 <option value="13:00">13:00</option>
+                                 <option value="14:00">14:00</option>
+                                 <option value="15:00">15:00</option>
+                                 <option value="16:00">16:00</option>
+                                 <option value="17:00">17:00</option>
+                                 <option value="18:00">18:00</option>
+                             </select>
                         </div>
                         <div class="error-message" id="visit_date_error"></div>
                         <div class="error-message" id="visit_time_error"></div>
@@ -257,9 +267,83 @@
     <footer class="stack footer-stack">
       <div class="footer-img-wrap">
         <img src="img/footer.png" alt="軽の森 フッター" class="footer-img">
+        <img src="img/footer2.png" alt="軽の森 フッター" class="footer-img footer-img2">
         </div>
     </footer>
 
+    <!-- Flatpickr 初期化 -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // セレクタは必要に応じて調整（id優先→nameフォールバック）
+      const input = document.querySelector('#date, input[name="visit_date"]');
+      if (!input) return;
+
+      // JS有効時はネイティブUIを避けるため text 化（見た目統一）
+      try { input.setAttribute('type', 'text'); } catch (e) {}
+
+      // 日本語ローカライズ
+      if (window.flatpickr?.l10ns?.ja) {
+        flatpickr.localize(flatpickr.l10ns.ja);
+      }
+
+      const fp = flatpickr(input, {
+        dateFormat: 'Y-m-d',   // 送信値（バックエンド用）
+        altInput: true,
+        altFormat: 'Y/m/d',    // 画面表示
+        minDate: 'today',
+        disableMobile: true,
+        allowInput: false
+      });
+
+      // altInput（見た目の入力）の方にプレースホルダー付与
+      fp.altInput.setAttribute('placeholder', '年/月/日');
+      
+      // カレンダーアイコンを追加
+      fp.altInput.classList.add('has-calendar-icon');
+      
+      // 時間選択の初期状態を設定
+      const timeSelect = document.querySelector('select[name="visit_time"]');
+      if (timeSelect) {
+        // 初期状態ではプレースホルダーを選択状態にする
+        timeSelect.selectedIndex = 0;
+        
+        // 値が変更されたときの処理
+        timeSelect.addEventListener('change', function() {
+          if (this.value === '') {
+            // プレースホルダーが選択された場合、プレースホルダーを選択状態に戻す
+            this.selectedIndex = 0;
+          }
+        });
+      }
+
+      // 送信時の最終ガード（空・過去・不正値）
+      const form = input.closest('form');
+      if (form) {
+        form.addEventListener('submit', (e) => {
+          const val = (input.value || '').trim();
+          if (!val) {
+            e.preventDefault();
+            input.setCustomValidity('日付を選択してください');
+            input.reportValidity();
+            return;
+          }
+          
+          // 形式&今日以降チェック（ローカル基準）
+          const picked = new Date(val + 'T00:00:00');
+          const now = new Date();
+          const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+          if (isNaN(picked.getTime()) || picked < today) {
+            e.preventDefault();
+            input.setCustomValidity('過去の日付は選択できません');
+            input.reportValidity();
+            return;
+          }
+          input.setCustomValidity('');
+        });
+      }
+    });
+    </script>
+    
     <script src="script.js"></script>
 </body>
 </html>
