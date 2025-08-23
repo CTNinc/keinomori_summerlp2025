@@ -99,8 +99,8 @@ if (!empty($errors)) {
 }
 
 // メール送信処理
-$to = 'k-keinomori@keinomori.com'; // 会社宛てのメールアドレス
-$cc = 'info@keinomori.com'; // CC
+$to = 'keinomori@keinomori.com'; // 会社宛てのメールアドレス
+$cc = 'info@ctn-group.com'; // CC
 $subject = '軽の森 お問い合わせフォーム - ' . $car_type;
 
 // メールヘッダー設定

@@ -402,16 +402,15 @@ main + footer {
 }
 
 .tel-modal-close {
-    position: absolute;
-    left: 50%;
-    bottom: 30%;
-    transform: translateX(-50%);
+    position: relative;
+    top: 3%;
     z-index: 10001;
     display: inline-flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     padding: 8px 12px 4px;
     color: #fff;
+    opacity: 0.8;
     font-size: 16px;
     font-weight: 700;
     cursor: pointer;
@@ -429,7 +428,7 @@ main + footer {
 
 .tel-modal-close:hover,
 .tel-modal-close:focus {
-    color: #000;
+    opacity: 1;
 }
 
 .tel-buttons {
