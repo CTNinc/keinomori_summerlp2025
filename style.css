@@ -37,19 +37,27 @@ header {
     width: 100%;
     background-color: #fff;
     box-sizing: border-box;
+    height: auto;
 }
 
 /* 中サイズ端末（395px〜768px）でのヘッダー幅調整 */
 @media (min-width: 395px) and (max-width: 768px) {
     .header-img-wrap {
-        max-width: 375px;
         padding: 0 10px;
     }
     .header-img {
         height: auto;
         display: block;
-        width: 80px;
+        width: 25%;
         object-fit: cover;
+    }
+    .header-img-wrap a {
+        width: auto;
+        max-width: none;
+    }
+    .header-img-wrap a img {
+        max-width: 120px;
+        max-height: 50px;
     }
 }
 
@@ -62,31 +70,38 @@ header {
     .header-img {
         height: auto;
         display: block;
-        width: 30% !important;
+        width: 20% !important;
         object-fit: cover;
+    }
+    .header-img-wrap a {
+        width: auto;
+        max-width: none;
     }
 }
 
 .header-img {
     height: auto;
     display: block;
-    width: 80px;
+    width: 25%;
     object-fit: cover;
 }
 .header-img2 {
     margin-top: 5px!important;
 }
 
-.header-stack {
-   margin-bottom: 10px;
+
+
+.header-img-wrap a {
+    width: auto; /* 自動幅に変更 */
+    max-width: none; /* 最大幅制限を削除 */
+    flex-shrink: 0; /* 縮小を防ぐ */
 }
 
-/* footer {
-    background-color: #3E3E3E;
-} */
-/* .footer-stack {
-    
-} */
+.header-img-wrap a img {
+    width: auto; /* 画像の元のサイズを維持 */
+    height: auto;
+    object-fit: contain;
+}
 
 @media (max-width: 394px) {
    
@@ -118,12 +133,12 @@ footer {
 /* 中サイズ端末（395px〜768px）でのフッター幅調整 */
 @media (min-width: 395px) and (max-width: 768px) {
     .footer-img-wrap {
-        max-width: 375px;
+        max-width: none;
     }
 }
 
 /* PC版でのフッター幅調整 */
-@media (min-width: 769px) {
+@media (min-width: 768px) {
     .footer-img-wrap {
         max-width: 768px;
     }
@@ -146,7 +161,7 @@ main {
 }
 
 .main_content_block {
-    max-width: 375px;
+    max-width: none;
     margin: 0 auto;
     padding-bottom: 0;
     height: fit-content;
@@ -155,7 +170,7 @@ main {
 /* 中サイズ端末（395px〜768px）でのメインコンテンツ幅調整 */
 @media (min-width: 395px) and (max-width: 768px) {
     .main_content_block {
-        max-width: 375px;
+        max-width: none;
     }
 }
 
@@ -186,14 +201,13 @@ section {
     line-height: 0;
     font-size: 0;
     vertical-align: bottom;
-    margin-top: -8px;
-    max-width: 375px;
+    max-width: none;
 }
 
 /* 中サイズ端末（395px〜768px）でのセクション幅調整 */
 @media (min-width: 395px) and (max-width: 768px) {
     section {
-        max-width: 375px;
+        max-width: none;
     }
 }
 
@@ -204,22 +218,7 @@ section {
     }
 }
 
-/* スタック効果 - 影の広がり量分だけ次の画像を上に重ねる */
-.stack img {
-    display: block;
-    width: 100%;
-    height: auto;
-}
 
-/* スタックセクション内の画像間隔を詰める */
-.stack img + img {
-    margin-top: -8px;
-}
-
-/* スタックセクション内のリンク画像間隔を詰める */
-.stack a + a img {
-    margin-top: -8px;
-}
 
 /* ヘッダーとフッターの画像もスタック効果に含める */
 header.stack img,
@@ -229,19 +228,16 @@ footer.stack img {
     height: auto;
 }
 
-/* ヘッダーとメインの間を詰める */
-header + main {
-    margin-top: -10px;
+.sp-btn-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+margin: 0 auto;
+padding: 1rem 3rem;
+background-color: #fff;
 }
 
-/* メインとフッターの間を詰める */
-main + footer {
-    margin-top: -15px;
-}
 
-.stack + .stack {
-    margin-top: -8px;
-}
 
 .stack:first-child {
     margin-top: 0;
@@ -262,7 +258,24 @@ main + footer {
     padding: 0;
     vertical-align: bottom;
     font-size: 0;
-    cursor: pointer;
+}
+
+/* FV画像専用スタイル - アスペクト比を維持 */
+.fv-img {
+    object-fit: contain;
+    max-height: none;
+}
+
+/* pictureタグ内のFV画像のアスペクト比を維持 */
+.fv-img picture {
+    width: 100%;
+    height: auto;
+}
+
+.fv-img picture img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
 }
 
 /* 中サイズ端末（395px〜768px）での画像幅調整 */
@@ -274,7 +287,7 @@ main + footer {
     .inquiry-img,
     .appoint-img,
     .cta-img {
-        max-width: 375px;
+        max-width: none;
     }
 }
 
@@ -337,7 +350,7 @@ main + footer {
     font-size: 0;
     cursor: pointer;
     position: relative;
-    
+background-color: #fff;    
 }
 
 /* CTAセクション内の2番目の画像の間隔を詰める */
@@ -438,13 +451,14 @@ main + footer {
     align-items: center;
     margin-top: 20px;
     padding: 0 20px;
-    max-width: 80vw;
+    width: 60vw;
 }
 
 /* 中サイズ端末とSP版でのパディング調整 */
 @media (max-width: 768px) {
     .tel-buttons {
         padding: 0;
+        width: 80vw;
     }
 }
 
@@ -477,7 +491,7 @@ main + footer {
 .inquiry-section {
     padding: 0;
     width: 100%;
-    max-width: 375px;
+    max-width: none;
     line-height: normal;
     font-size: 16px;
     margin: 0 auto;
@@ -486,7 +500,7 @@ main + footer {
 /* 中サイズ端末（395px〜768px）でのお問い合わせセクション幅調整 */
 @media (min-width: 395px) and (max-width: 768px) {
     .inquiry-section {
-        max-width: 375px;
+        max-width: none;
     }
 }
 
@@ -498,7 +512,7 @@ main + footer {
 }
 
 .form-container {
-    max-width: 375px;
+    max-width: none;
     margin: 0 auto;
     padding: 0 8px;
     font-size: 16px;
@@ -509,7 +523,7 @@ main + footer {
 /* 中サイズ端末（395px〜768px）でのフォーム幅調整 */
 @media (min-width: 395px) and (max-width: 768px) {
     .form-container {
-        max-width: 375px;
+        max-width: none;
         padding: 0;
     }
 }
@@ -971,6 +985,7 @@ main + footer {
     display: block;
     line-height: 1.4;
     font-size: 11px;
+    font-weight: 700;
 }
 
 .privacypolicy_textbox_text a {
@@ -1204,18 +1219,20 @@ main + footer {
 
 /* 注意事項ブロック */
 .notice-block {
-    background: #6c757d;
-    color: #fff;
+    background: #DFDFDF;
+    color: #333;
     padding: 6px 10px;
-    border-radius: 5px;
     margin: 15px auto;
     text-align: center;
-    max-width: 350px;
-    font-size: 7px;
+    width: fit-content;
+    max-width: 700px;
+    white-space: nowrap;
+    font-size: 10px;
     font-family: 'Noto Sans JP', sans-serif;
 }
 
 .notice-block p {
+    width: 100%;
     margin: 0;
     font-weight: bold;
     line-height: 1.0;
@@ -1245,7 +1262,7 @@ main + footer {
     }
     
     .notice-block {
-        font-size: 9px;
+        font-size: 14px;
     }
     
     .privacypolicy_textbox_text {
@@ -1280,9 +1297,7 @@ main + footer {
 }
 
 .submit-btn:hover {
-    background: linear-gradient(135deg, #2980b9, #1f5f8b);
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(52, 152, 219, 0.3);
 }
 
 .arrow {
@@ -1343,7 +1358,6 @@ main + footer {
 .back-btn,
 .top-btn {
     display: inline-block;
-    background: #3498db;
     color: #fff;
     padding: 12px 30px;
     text-decoration: none;
@@ -1354,9 +1368,7 @@ main + footer {
 
 .back-btn:hover,
 .top-btn:hover {
-    background: #2980b9;
     transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
 }
 
 .complete-message {
@@ -1422,19 +1434,42 @@ main + footer {
     font-size: 14px;
 }
 
+.notice-content {
+    text-align: left;
+}
+
+
+
+
+.main_content_block2 {
+    max-width: 786px;
+    margin: 0 auto;
+}
+
+
 /* SP専用デザイン（394px幅以下） */
 @media (max-width: 394px) {
     main {
         max-width: 100%;
         margin: 0;
     }
+
+    .form-section {
+        margin-bottom: 1rem;
+    }
     
+    .main_content_block2 {
+        padding:0 1rem;
+        max-width: 100%;
+     }
+
     .main_content_block {
         max-width: 100%;
         margin: 0;
         padding-left: 0;
         padding-right: 0;
     }
+
     
     .header-img-wrap {
         margin-left: 0;
@@ -1443,11 +1478,12 @@ main + footer {
         padding-right: 0;
     }
     
+
+    
     header,
     section,
     footer {
         max-width: 100%;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     }
 
     footer {
@@ -1455,9 +1491,16 @@ main + footer {
     }
 
     .header-img {
-        width: 80px;
-        max-width: 80px;
+        width: 25%;
+        max-width: 150px;
     }
+    
+    .header-img-wrap a img {
+        max-width: 100px;
+        max-height: 40px;
+    }
+    
+
     
     .fv-img,
     .sale-img,
@@ -1486,7 +1529,7 @@ main + footer {
     }
     
     .submit-btn {
-        width: 100%;
+        width: 40%;
         justify-content: center;
         padding: 8px 0 10px;
         font-size: 16px;
@@ -1566,8 +1609,8 @@ main + footer {
 @media (min-width: 395px) and (max-width: 768px) {
     /* ヘッダーとフッターの画像サイズ調整 */
     .header-img {
-        width: 80px;
-        max-width: 80px;
+        width: 25%;
+        max-width: 160px;
     }
     
     /* フォーム要素の調整 */
@@ -1622,8 +1665,8 @@ main + footer {
     
     /* 注意事項ブロックの調整 */
     .notice-block {
-        font-size: 8px;
-        max-width: 320px;
+        font-size: 12px;
+        max-width: 375px;
     }
     
     /* プライバシーポリシーの調整 */
@@ -1719,4 +1762,183 @@ main + footer {
 
 .success-modal-ok-btn:hover {
     background-color: #0056b3;
+}
+
+/* サンクスページ用スタイル */
+.thanks-section {
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.thanks-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    max-width: none;
+    margin: 0 auto;
+}
+
+/* 中サイズ端末（395px〜768px）でのサンクス画像幅調整 */
+@media (min-width: 395px) and (max-width: 768px) {
+    .thanks-img {
+        max-width: none;
+    }
+}
+
+/* PC版でのサンクス画像幅調整 */
+@media (min-width: 769px) {
+    .thanks-img {
+        max-width: 600px;
+    }
+}
+
+.header-thx {
+    width: 100%;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    line-height: 0;
+    background-color: #faf4ef;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+
+
+.notice-section {
+    text-align: center;
+    padding: 30px 20px;
+    background-color: #faf4ef;
+    margin: 20px 0;
+}
+
+@media screen and (max-width: 767px) {
+    .notice-section {
+        text-align: left;
+    }
+}
+
+.notice-content h2 {
+    color: #333;
+    font-size: 18px;
+    margin-bottom: 20px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.notice-content p {
+    color: #333;
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+@media screen and (max-width: 767px) {
+    .notice-content h2 {
+        text-align: left;
+    }
+    .notice-content p {
+        text-align: left;
+    }
+}
+
+.back-section {
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    padding: 15px 30px;
+    border-radius: 25px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    font-size: 16px;
+}
+
+.back-btn:hover {
+    transform: translateY(-2px);
+}
+
+.back-btn .arrow {
+    font-size: 18px;
+    transition: transform 0.3s ease;
+}
+
+.back-btn:hover .arrow {
+    transform: translateX(5px);
+}
+
+/* サンクスページ内の画像最大幅制限 */
+.back-btn-img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* SP版でのサンクスページ調整 */
+@media (max-width: 394px) {
+    .thanks-section {
+        padding: 30px 15px;
+    }
+    
+    .notice-section {
+        padding: 20px 15px;
+        margin: 15px 0;
+    }
+    
+    .notice-content h2 {
+        font-size: 16px;
+        margin-bottom: 15px;
+        white-space: normal;
+        word-break: break-word;
+        overflow-wrap: anywhere;
+        line-height: 1.6;
+    }
+    
+    .notice-content p {
+        font-size: 13px;
+    }
+    
+    .back-section {
+        padding: 30px 15px;
+    }
+    
+    .back-btn {
+        padding: 12px 25px;
+        font-size: 14px;
+    }
+}
+
+/* 中サイズ端末（395px〜768px）でのサンクスページ調整 */
+@media (min-width: 395px) and (max-width: 768px) {
+    .thanks-section {
+        padding: 35px 20px;
+    }
+    
+    .notice-section {
+        padding: 25px 20px;
+        margin: 18px 0;
+    }
+    
+    .notice-content h2 {
+        font-size: 17px;
+        margin-bottom: 18px;
+    }
+    
+    .notice-content p {
+        font-size: 14px;
+    }
+    
+    .back-section {
+        padding: 35px 20px;
+    }
+    
+    .back-btn {
+        padding: 14px 28px;
+        font-size: 15px;
+    }
 }

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>お問い合わせ完了 - 軽の森</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+   <!-- ヘッダー -->
+   <header class="stack header-stack">
+    <div class="header-img-wrap">
+      <!-- 現在の設定（コメントアウト） -->
+      <!-- <img
+          src="/img/header/logo-768.webp"
+          srcset="/img/header/logo-768.webp 768w, /img/header/logo-1536.webp 1536w"
+          sizes="(min-width: 769px) 768px, 100vw"
+          alt="軽の森"
+          width="768" height="auto"
+          loading="lazy" decoding="async" class="header-img"> -->
+      
+      <!-- 修正後：適切なsrcset設定 -->
+      <img src="img/header/logo-768.webp"
+           srcset="img/header/logo-768.webp 1x, img/header/logo-1536.webp 2x"
+           sizes="(min-width: 769px) 768px, 100vw"
+           alt="軽の森"
+           width="768" height="auto"
+           loading="lazy" decoding="async" class="header-img"
+           id="logo-link"
+           style="cursor: pointer;">
+      
+      <!-- 現在の設定（コメントアウト） -->
+      <!-- <img
+      src="img/header/storeinfo-768.webp"
+      srcset="img/header/storeinfo-768.webp 768w, img/header/storeinfo-1568.webp 1568w"
+      sizes="(min-width: 769px) 768px, 100vw"
+      alt="店舗情報へ"
+      width="768" height="auto"
+      loading="lazy" decoding="async" class="header-img header-img2"> -->
+      
+      <!-- 修正後：適切なsrcset設定 -->
+      <img src="img/header/storeinfo-768.webp"
+           srcset="img/header/storeinfo-768.webp 1x, img/header/storeinfo-1568.webp 2x"
+           sizes="(min-width: 769px) 768px, 100vw"
+           alt="店舗情報へ"
+           width="768" height="auto"
+           loading="lazy" decoding="async" class="header-img header-img2"
+           id="store-info-link"
+           style="cursor: pointer;">
+      
+    </div>
+  </header>
+
+    <!-- メインコンテンツ -->
+    <main>
+        <div class="main_content_block2">
+            <!-- サンクスメッセージ -->
+            <section class="thanks-section stack">
+                <img src="img/thx/thx.png" alt="ありがとうございます" class="thanks-img">
+            </section>
+
+            <!-- お知らせ -->
+            <section class="notice-section stack">
+                <div class="notice-content">
+                    <h2>この度は「軽の森」にお問い合わせいただき、誠にありがとうございます。</h2>
+                    <p>担当スタッフより１～２営業日以内にご連絡いたしますので今しばらくお待ちください。</p>
+                </div>
+            </section>
+
+            <section class="form-section stack">
+                <a href="#tel-modal" id="tel-btn-3" class="back-btn">
+                    <img src="img/thx/tel-btn.png" alt="お急ぎの方は店舗に直接ご連絡ください。" class="back-btn-img">
+                </a>
+            </section>
+        </div>
+    </main>
+
+    <!-- 電話モーダル -->
+    <div id="tel-modal" class="tel-modal">
+        <div class="tel-modal-content">
+            
+            <!-- モーダルタイトル -->
+            <div class="tel-modal-title">
+                <h3>軽未使用車のご購入に関する<br>お問い合わせはこちら！</h3>
+            </div>
+            
+            <div class="tel-buttons">
+                <a href="tel:0800-830-329" class="tel-button">
+                    <img src="img/tel2.png" alt="0800-830-329" class="tel-img">
+                </a>
+                <a href="tel:0800-830-3359" class="tel-button">
+                    <img src="img/tel1.png" alt="0800-830-3359" class="tel-img">
+                </a>
+            </div>
+            <span class="tel-modal-close"><span class="close-icon">&times;</span><span class="close-text">閉じる</span></span>
+        </div>
+    </div>
+
+    <!-- フッター -->
+    <footer class="stack footer-stack">
+        <div class="footer-img-wrap">
+          <!-- <img
+              src="/img/footer/footer-768.webp"
+              srcset="/img/footer/footer-768.webp 768w, /img/footer/footer-1536.webp 1536w"
+              sizes="(min-width: 769px) 768px, 100vw"
+              alt="軽の森"
+              width="768" height="auto"
+              loading="lazy" decoding="async" class="footer-img"> -->
+              <img src="img/footer/footer.png" alt="軽の森 フッター" class="footer-img">  
+          </div>
+      </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

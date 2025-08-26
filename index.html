@@ -24,8 +24,40 @@
     <!-- ヘッダー -->
     <header class="stack header-stack">
       <div class="header-img-wrap">
-        <img src="img/logo.png" alt="軽の森" class="header-img">
-        <img src="img/storeinfo.png" alt="店舗情報" class="header-img header-img2 ">
+        <!-- 現在の設定（コメントアウト） -->
+        <!-- <img
+            src="/img/header/logo-768.webp"
+            srcset="/img/header/logo-768.webp 768w, /img/header/logo-1536.webp 1536w"
+            sizes="(min-width: 769px) 768px, 100vw"
+            alt="軽の森"
+            width="768" height="auto"
+            loading="lazy" decoding="async" class="header-img"> -->
+        
+        <!-- 修正後：適切なsrcset設定 -->
+        <img src="img/header/logo-768.webp"
+             srcset="img/header/logo-768.webp 1x, img/header/logo-1536.webp 2x"
+             sizes="(min-width: 769px) 768px, 100vw"
+             alt="軽の森"
+             width="768" height="auto"
+             loading="lazy" decoding="async" class="header-img">
+        
+        <!-- 現在の設定（コメントアウト） -->
+        <!-- <img
+        src="img/header/storeinfo-768.webp"
+        srcset="img/header/storeinfo-768.webp 768w, img/header/storeinfo-1568.webp 1568w"
+        sizes="(min-width: 769px) 768px, 100vw"
+        alt="店舗情報へ"
+        width="768" height="auto"
+        loading="lazy" decoding="async" class="header-img header-img2"> -->
+        
+        <!-- 修正後：適切なsrcset設定 -->
+        <img src="img/header/storeinfo-768.webp"
+             srcset="img/header/storeinfo-768.webp 1x, img/header/storeinfo-1568.webp 2x"
+             sizes="(min-width: 769px) 768px, 100vw"
+             alt="店舗情報へ"
+             width="768" height="auto"
+             loading="lazy" decoding="async" class="header-img header-img2">
+        
       </div>
     </header>
 
@@ -33,13 +65,71 @@
     <main>
         <div class="main_content_block">
             <!-- ファーストビュー -->
-        <section class="fv-section stack">
-            <img src="img/FV.png" alt="軽の森 ファーストビュー" class="fv-img">
-        </section>
+            <section class="fv-section stack">
+                <!-- 現在の設定（コメントアウト） -->
+                <!-- <picture class="hero-media fv-img">
+                   <!-- WebP -->
+                   <source type="image/webp"
+                           srcset="img/fv/FV-768.webp 768w, img/fv/FV-1536.webp 1536w"
+                           sizes="(min-width: 769px) 768px, 100vw">
+                   <!-- 最後にフォールバック（PNG/JPGでもOK） -->
+                   <!-- <img
+                       src="img/FV.png"
+                       srcset="img/FV.png 768w, img/FV.png 1536w"
+                       sizes="(min-width: 769px) 768px, 100vw"
+                       alt="軽の森 ファーストビュー"
+                       fetchpriority="high" decoding="async"> -->
+                   <!-- </picture> -->
+                   
+                   <!-- 現在の設定（コメントアウト） -->
+                   <!-- <img src="img/fv/fv.png" alt="軽の森 ファーストビュー" class="fv-img"> -->
+                   
+                   <!-- 修正後：適切なsrcset設定 -->
+                   <img src="img/fv/FV-768.webp"
+                        srcset="img/fv/FV-768.webp 1x, img/fv/FV-1536.webp 2x"
+                        sizes="(min-width: 769px) 768px, 100vw"
+                        alt="軽の森 ファーストビュー"
+                        width="768" height="auto"
+                        loading="lazy" decoding="async" class="fv-img">
+           </section>
 
-        <section class="stack">
-          <a href="#" id="sp-btn-1" class="stack"><img src="img/sp_btn.png" alt="ボタン" class="cta-img"></a>
-          <a href="#tel-modal" id="tel-btn-1"class="stack"><img src="img/tel_btn.png" alt="ボタン" class="cta-img"></a>
+        <section class="sp-btn-wrapper">
+         <a href="#" id="sp-btn-1" class="stack cta-img-wrap">
+            <!-- 現在の設定（コメントアウト） -->
+            <!-- <img
+                src="/img/cta/sp_btn-768.webp"
+                srcset="/img/cta/sp_btn-768.webp 768w, /img/cta/sp_btn-1536.webp 1536w"
+                sizes="(min-width: 769px) 768px, 100vw"
+                alt="限定目玉商品をチェック"
+                width="768" height="auto"
+                loading="lazy" decoding="async" class="cta-img"> -->
+            
+            <!-- 修正後：適切なsrcset設定 -->
+            <img src="img/cta/sp_btn-768.webp"
+                 srcset="img/cta/sp_btn-768.webp 1x, img/cta/sp_btn-1536.webp 2x"
+                 sizes="(min-width: 769px) 768px, 100vw"
+                 alt="限定目玉商品をチェック"
+                 width="768" height="auto"
+                 loading="lazy" decoding="async" class="cta-img">
+        </a>
+          <a href="#tel-modal" id="tel-btn-1" class="stack cta-img-wrap">
+            <!-- 現在の設定（コメントアウト） -->
+            <!-- <img
+                src="/img/cta/tel_btn-768.webp"
+                srcset="/img/cta/tel_btn-768.webp 768w, /img/cta/tel_btn-1536.webp 1536w"
+                sizes="(min-width: 769px) 768px, 100vw"
+                alt="お電話はこちら"
+                width="768" height="auto"
+                loading="lazy" decoding="async" class="cta-img"> -->
+            
+            <!-- 修正後：適切なsrcset設定 -->
+            <img src="img/cta/tel_btn-768.webp"
+                 srcset="img/cta/tel_btn-768.webp 1x, img/cta/tel_btn-1536.webp 2x"
+                 sizes="(min-width: 769px) 768px, 100vw"
+                 alt="お電話はこちら"
+                 width="768" height="auto"
+                 loading="lazy" decoding="async" class="cta-img">
+        </a>
         </section>
 
         <!-- CTA -->
@@ -50,7 +140,21 @@
 
         <!-- オプション情報 -->
         <section class="option-section stack">
-            <img src="img/option.png" alt="オプション情報" class="option-img">
+            <!-- <picture class="hero-media fv-img">
+                <!-- WebP -->
+                <source type="image/webp"
+                        srcset="/img/option/option-768.webp 768w, /img/option/option-1536.webp 1536w"
+                        sizes="(min-width: 769px) 768px, 100vw">
+                <!-- 最後にフォールバック（PNG/JPGでもOK） -->
+                <!-- <img
+                    src="/img/option.png"
+                    srcset="/img/kv-768.png 768w, /img/kv-1536.png 1536w"
+                    sizes="(min-width: 769px) 768px, 100vw"
+                    alt="（画像の内容に合わせて適切な代替テキスト）"
+                    width="768" height="432"
+                    fetchpriority="high" decoding="async" class="option-img"> -->
+            </picture> -->
+            <img src="img/option/option.png" alt="オプション情報" class="option-img">
         </section>
 
         <!-- 電話モーダル -->
@@ -90,34 +194,134 @@
             </div>
         </div>
 
-        <section class="stack">
-          <a href="#" id="sp-btn-3"><img src="img/sp_btn.png" alt="ボタン" class="cta-img"></a>
-          <a href="#tel-modal" id="tel-btn-3"><img src="img/tel_btn.png" alt="ボタン" class="cta-img"></a>
-        </section>
+        <section class="sp-btn-wrapper">
+            <a href="#" id="sp-btn-1" class="stack cta-img-wrap">
+               <!-- 現在の設定（コメントアウト） -->
+               <!-- <img
+                   src="/img/cta/sp_btn-768.webp"
+                   srcset="/img/cta/sp_btn-768.webp 768w, /img/cta/sp_btn-1536.webp 1536w"
+                   sizes="(min-width: 769px) 768px, 100vw"
+                   alt="限定目玉商品をチェック"
+                   width="768" height="auto"
+                   loading="lazy" decoding="async" class="cta-img"> -->
+               
+               <!-- 修正後：適切なsrcset設定 -->
+               <img src="img/cta/sp_btn-768.webp"
+                    srcset="img/cta/sp_btn-768.webp 1x, img/cta/sp_btn-1536.webp 2x"
+                    sizes="(min-width: 769px) 768px, 100vw"
+                    alt="限定目玉商品をチェック"
+                    width="768" height="auto"
+                    loading="lazy" decoding="async" class="cta-img">
+           </a>
+             <a href="#tel-modal" id="tel-btn-1" class="stack cta-img-wrap">
+               <!-- 現在の設定（コメントアウト） -->
+               <!-- <img
+                   src="/img/cta/tel_btn-768.webp"
+                   srcset="/img/cta/tel_btn-768.webp 768w, /img/cta/tel_btn-1536.webp 1536w"
+                   sizes="(min-width: 769px) 768px, 100vw"
+                   alt="お電話はこちら"
+                   width="768" height="auto"
+                   loading="lazy" decoding="async" class="cta-img"> -->
+               
+               <!-- 修正後：適切なsrcset設定 -->
+               <img src="img/cta/tel_btn-768.webp"
+                    srcset="img/cta/tel_btn-768.webp 1x, img/cta/tel_btn-1536.webp 2x"
+                    sizes="(min-width: 769px) 768px, 100vw"
+                    alt="お電話はこちら"
+                    width="768" height="auto"
+                    loading="lazy" decoding="async" class="cta-img">
+           </a>
+           </section>
 
         <!-- セール情報1 -->
         <section id="sale-section" class="sale-section stack">
-            <img src="img/sale1.png" alt="セール情報1" class="sale-img">
+            <picture class="hero-media fv-img">
+                <!-- WebP -->
+                <source type="image/webp"
+                        srcset="/img/sale/sale1-768.webp 768w, /img/sale/sale1-1536.webp 1536w"
+                        sizes="(min-width: 769px) 768px, 100vw">
+                <!-- 最後にフォールバック（PNG/JPGでもOK） -->
+                <img
+                    src="/img/sale1.png"
+                    srcset="/img/kv-768.png 768w, /img/kv-1536.png 1536w"
+                    sizes="(min-width: 769px) 768px, 100vw"
+                    alt="（画像の内容に合わせて適切な代替テキスト）"
+                    width="768" height="432"
+                    fetchpriority="high" decoding="async" class="sale-img">
+            </picture>
         </section>
 
         <!-- セール情報2 -->
         <section class="sale-section stack">
-            <img src="img/sale2.png" alt="セール情報2" class="sale-img">
+            <picture class="hero-media fv-img">
+                <!-- WebP -->
+                <source type="image/webp"
+                        srcset="/img/sale/sale2-768.webp 768w, /img/sale/sale2-1536.webp 1536w"
+                        sizes="(min-width: 769px) 768px, 100vw">
+                <!-- 最後にフォールバック（PNG/JPGでもOK） -->
+                <img
+                    src="/img/sale2.png"
+                    srcset="/img/sale2.png 768w, /img/sale2.png 1536w"
+                    sizes="(min-width: 769px) 768px, 100vw"
+                    alt="（画像の内容に合わせて適切な代替テキスト）"
+                    width="768" height="432"
+                    fetchpriority="high" decoding="async" class="sale-img">
+            </picture>
         </section>
 
         <!-- 店舗情報 -->
-        <section class="store-section stack">
-            <img src="img/store.png" alt="店舗情報" class="store-img">
+        <section id="store-section" class="store-section stack">
+            <picture class="hero-media fv-img">
+                <!-- WebP -->
+                <source type="image/webp"
+                        srcset="/img/store/store-768.webp 768w, /img/store/store-1536.webp 1536w"
+                        sizes="(min-width: 769px) 768px, 100vw">
+                <!-- 最後にフォールバック（PNG/JPGでもOK） -->
+                <img
+                    src="/img/storeinfo.png"
+                    srcset="/img/storeinfo.png 768w, /img/storeinfo.png 1536w"
+                    sizes="(min-width: 769px) 768px, 100vw"
+                    alt="（画像の内容に合わせて適切な代替テキスト）"
+                    width="768" height="432"
+                    fetchpriority="high" decoding="async" class="store-img">
+            </picture>
         </section>
 
         <!-- アポイントメント -->
         <section class="appoint-section stack">
-            <img src="img/appoint.png" alt="アポイントメント" class="appoint-img">
+            <picture class="hero-media fv-img">
+                <!-- WebP -->
+                <source type="image/webp"
+                        srcset="/img/appoint/appoint-768.webp 768w, /img/appoint/appoint-1536.webp 1536w"
+                        sizes="(min-width: 769px) 768px, 100vw">
+                <!-- 最後にフォールバック（PNG/JPGでもOK） -->
+                <img
+                    src="/img/appoint.png"
+                    srcset="/img/appoint.png 768w, /img/appoint.png 1536w"
+                    sizes="(min-width: 769px) 768px, 100vw"
+                    alt="（画像の内容に合わせて適切な代替テキスト）"
+                    width="768" height="432"
+                    fetchpriority="high" decoding="async" class="appoint-img">
+            </picture>
         </section>
 
         <!-- お問い合わせフォーム -->
         <section class="inquiry-section stack">
-            <img src="img/inquiry.png" alt="お問い合わせ" class="inquiry-img">
+            <!-- <picture class="hero-media fv-img">
+                <!-- WebP -->
+                <source type="image/webp"
+                        srcset="/img/inquiry/inquiry-768.webp 768w, /img/inquiry/inquiry-1536.webp 1536w"
+                        sizes="(min-width: 769px) 768px, 100vw">
+                <!-- 最後にフォールバック（PNG/JPGでもOK） -->
+                <!-- <img
+                    src="/img/appoint.png"
+                    srcset="/img/appoint.png 768w, /img/appoint.png 1536w"
+                    sizes="(min-width: 769px) 768px, 100vw"
+                    alt="（画像の内容に合わせて適切な代替テキスト）"
+                    width="768" height="432"
+                    fetchpriority="high" decoding="async" class="inquiry-img"> -->
+            </picture> 
+            <img src="img/inquiry/inquiry.png" alt="お問い合わせフォーム" class="inquiry-img">
             
             <div class="form-container">
               <!-- 成功メッセージ -->
@@ -266,9 +470,26 @@
     <!-- フッター -->
     <footer class="stack footer-stack">
       <div class="footer-img-wrap">
-        <img src="img/footer.png" alt="軽の森 フッター" class="footer-img">
+        <!-- 現在の設定（コメントアウト） -->
+        <!-- <img
+            src="/img/footer/footer-768.webp"
+            srcset="/img/footer/footer-768.webp 768w, /img/footer/footer-1536.webp 1536w"
+            sizes="(min-width: 769px) 768px, 100vw"
+            alt="軽の森"
+            width="768" height="auto"
+            loading="lazy" decoding="async" class="footer-img"> -->
+        
+        <!-- 修正後：適切なsrcset設定 -->
+        <img src="img/footer/footer-768.webp"
+             srcset="img/footer/footer-768.webp 1x, img/footer/footer-1536.webp 2x"
+             sizes="(min-width: 769px) 768px, 100vw"
+             alt="軽の森"
+             width="768" height="auto"
+             loading="lazy" decoding="async" class="footer-img">
+        
         <img src="img/footer2.png" alt="軽の森 フッター" class="footer-img footer-img2">
-        </div>
+        
+      </div>
     </footer>
 
     <!-- Flatpickr 初期化 -->

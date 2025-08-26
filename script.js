@@ -72,34 +72,55 @@ function submitFormAjax(form) {
     
     fetch('contact.php', {
         method: 'POST',
-        body: formData
+        body: formData,
+        redirect: 'follow'
     })
     .then(response => {
+        // リダイレクトが発生した場合（成功時）
+        if (response.redirected) {
+            // リダイレクト先に移動
+            window.location.href = response.url;
+            return;
+        }
+        
+        // 通常のレスポンスの場合
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
-        return response.json();
+        
+        // Content-TypeをチェックしてJSONかどうか判断
+        const contentType = response.headers.get('content-type');
+        if (contentType && contentType.includes('application/json')) {
+            return response.json();
+        } else {
+            // JSON以外の場合はリダイレクトとして処理
+            window.location.href = 'thanks.html';
+            return;
+        }
     })
     .then(data => {
-        // 送信ボタンを元に戻す
-        const submitBtn = form.querySelector('.submit-btn');
-        if (submitBtn) {
-            submitBtn.disabled = false;
-            submitBtn.textContent = '送信する';
-        }
-        
-        if (data.success) {
-            // 成功メッセージをモーダルで表示
-            showSuccessModal(data.message);
+        // JSONレスポンスの場合のみ実行
+        if (data) {
+            // 送信ボタンを元に戻す
+            const submitBtn = form.querySelector('.submit-btn');
+            if (submitBtn) {
+                submitBtn.disabled = false;
+                submitBtn.textContent = '送信する';
+            }
             
-            // フォームをリセット
-            form.reset();
-            
-            // CSRFトークンを再生成
-            generateCSRFToken();
-        } else {
-            // エラーメッセージを表示
-            alert(data.message || '送信に失敗しました。');
+            if (data.success) {
+                // 成功メッセージをモーダルで表示
+                showSuccessModal(data.message);
+                
+                // フォームをリセット
+                form.reset();
+                
+                // CSRFトークンを再生成
+                generateCSRFToken();
+            } else {
+                // エラーメッセージを表示
+                alert(data.message || '送信に失敗しました。');
+            }
         }
     })
     .catch(error => {
@@ -383,47 +404,37 @@ document.addEventListener('mouseleave', function(e) {
 
 // CTAボタンのイベント設定
 function setupCTAButtons() {
-    // 1つ目のCTAセクション（sp_btn.png）
-    const spBtn1 = document.getElementById('sp-btn-1');
-    if (spBtn1) {
-        spBtn1.addEventListener('click', function(e) {
-            e.preventDefault(); // デフォルトの動作を防ぐ
-            
-            // セール情報1のセクション（sale-section）にスクロール
-            const saleSection = document.getElementById('sale-section');
-            if (saleSection) {
-                console.log('sale-section found, scrolling to it');
-                saleSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            } else {
-                console.log('sale-section not found, trying fallback');
-                // フォールバック: sale1.pngを含むセクションを検索
-                const sale1Img = document.querySelector('img[src*="sale1.png"]');
-                if (sale1Img) {
-                    const sale1Section = sale1Img.closest('section');
-                    if (sale1Section) {
-                        console.log('sale1.png section found, scrolling to it');
-                        sale1Section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    } else {
-                        console.log('sale1.png section not found');
-                    }
+    // 1つ目のCTAセクション（sp_btn.png）: 重複IDに対応して全てにバインド
+    document.querySelectorAll('#sp-btn-1').forEach(function(spBtn1){
+        if (spBtn1) {
+            spBtn1.addEventListener('click', function(e) {
+                e.preventDefault(); // デフォルトの動作を防ぐ（トップへ戻るのを防止）
+                const saleSection = document.getElementById('sale-section');
+                if (saleSection) {
+                    saleSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 } else {
-                    console.log('sale1.png image not found');
+                    const sale1Img = document.querySelector('img[src*="sale1.png"]');
+                    if (sale1Img) {
+                        const sale1Section = sale1Img.closest('section');
+                        if (sale1Section) {
+                            sale1Section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }
+                    }
                 }
-            }
-        });
-    }
+            });
+        }
+    });
 
-    // 1つ目のCTAセクション（tel_btn.png）
-    const telBtn1 = document.getElementById('tel-btn-1');
-    if (telBtn1) {
-        telBtn1.addEventListener('click', function() {
-            // 電話モーダルを表示
+    // 電話モーダルを開くボタン（複数: id別・アンカー共通）
+    document.querySelectorAll('#tel-btn-1, #tel-btn-2, #tel-btn-3, a[href="#tel-modal"]').forEach(function(telBtn){
+        telBtn.addEventListener('click', function(e){
+            e.preventDefault();
             const modal = document.getElementById('tel-modal');
             if (modal) {
                 modal.style.display = 'block';
             }
         });
-    }
+    });
 
     // 2つ目のCTAセクション（CTA1.png）
     const spBtn2 = document.getElementById('sp-btn-2');
@@ -501,14 +512,37 @@ function setupCTAButtons() {
     }
 
     // ヘッダー店舗情報画像クリックでページ内スクロール
-    const headerStore = document.querySelector('img.header-img[alt="店舗情報"]');
+    const headerStore = document.querySelector('img.header-img.header-img2');
     if (headerStore) {
         headerStore.style.cursor = 'pointer';
         headerStore.addEventListener('click', function() {
             const storeImg = document.querySelector('img[alt="store.png"], img.store-img');
             if (storeImg) {
                 storeImg.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            } else {
+                const storeSection = document.getElementById('store-section');
+                if (storeSection) {
+                    storeSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
             }
+        });
+    }
+
+    // thanks.htmlページでの店舗情報画像クリックでindex.htmlの店舗情報セクションへ遷移
+    const thanksStoreInfo = document.getElementById('store-info-link');
+    if (thanksStoreInfo) {
+        thanksStoreInfo.addEventListener('click', function() {
+            // index.htmlの店舗情報セクションへ遷移
+            window.location.href = 'index.html#store-section';
+        });
+    }
+
+    // thanks.htmlページでのロゴクリックでindex.htmlに戻る
+    const thanksLogo = document.getElementById('logo-link');
+    if (thanksLogo) {
+        thanksLogo.addEventListener('click', function() {
+            // index.htmlに戻る
+            window.location.href = 'index.html';
         });
     }
 
