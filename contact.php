@@ -99,8 +99,8 @@ if (!empty($errors)) {
 }
 
 // メール送信処理
-$to = 'keinomori@keinomori.com'; // 会社宛てのメールアドレス
-$cc = 'info@ctn-group.com'; // CC
+$to = 'keinomori-hp@yosidaauto.com'; // 会社宛てのメールアドレス
+$cc = 'info@ctn-net.co.jp'; // CC
 $subject = '軽の森 お問い合わせフォーム - ' . $car_type;
 
 // メールヘッダー設定
@@ -175,9 +175,6 @@ if (!$auto_reply_sent) {
   error_log('お客様宛て自動返信メール送信成功 - 送信先: ' . $email . ', 件名: ' . $auto_reply_subject);
 }
 
-// 送信完了後、JSONレスポンスを返す
-echo json_encode([
-  'success' => true,
-  'message' => 'お問い合わせを受け付けました。担当者より順次ご連絡いたしますので、しばらくお待ちください。'
-]);
+// 送信完了後、サンクスページにリダイレクト
+header('Location: thanks.html');
 exit;
