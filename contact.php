@@ -160,7 +160,7 @@ $auto_reply_body .= "TEL: 072-240-0809\n\n";
 $auto_reply_body .= "※このメールは自動送信されています。\n";
 $auto_reply_body .= "※返信はできませんので、ご了承ください。\n";
 
-$auto_reply_headers = "From: 軽の森 <noreply@keinomori.com>\r\n";
+$auto_reply_headers = "From: 軽の森 <no-reply@yosidaauto.com>\r\n";
 $auto_reply_headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
 
 // お客様宛てメール送信
