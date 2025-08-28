@@ -101,17 +101,17 @@ if (!empty($errors)) {
 // メール送信処理
 $to = 'keinomori-hp@yosidaauto.com'; // 会社宛てのメールアドレス
 $cc = 'info@ctn-net.co.jp'; // CC
-$subject = '軽の森 お問い合わせフォーム - ' . $car_type;
+$subject = '【軽の森 低金利LP】お問い合わせ - ' . $car_type;
 
 // メールヘッダー設定
 $headers = [];
-$headers[] = 'From: 軽の森 <noreply@keinomori.com>';
+$headers[] = 'From: 軽の森 <no-reply@yosidaauto.com>';
 $headers[] = 'Reply-To: ' . $email;
 $headers[] = 'Cc: ' . $cc;
 $headers[] = 'Content-Type: text/plain; charset=UTF-8';
 
 // メール本文作成（会社宛て）
-$message = "以下の内容でお問い合わせがありました。\n\n";
+$message = "軽の森 低金利LPからお問い合わせがありました。お客様へ早急なご対応をお願いします。\n\n";
 $message .= "【お客様情報】\n";
 $message .= "お名前: " . $name . "\n";
 $message .= "フリガナ: " . $name_kana . "\n";
